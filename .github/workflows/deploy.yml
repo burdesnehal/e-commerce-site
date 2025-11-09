@@ -25,6 +25,6 @@ jobs:
       - name: Upload to server (zero downtime)
         run: |
           TIMESTAMP=$(date +%Y%m%d%H%M%S)
-          ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.SERVER_IP }} "mkdir -p /var/www/app/releases/$TIMESTAMP"
-          rsync -avz build/ ubuntu@${{ secrets.SERVER_IP }}:/var/www/app/releases/$TIMESTAMP/
-          ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.SERVER_IP }} "ln -sfn /var/www/app/releases/$TIMESTAMP /var/www/app/current"
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "mkdir -p /var/www/app/releases/$TIMESTAMP"
+          rsync -avz build/ ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }}:/var/www/app/releases/$TIMESTAMP/
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "ln -sfn /var/www/app/releases/$TIMESTAMP /var/www/app/current"
